@@ -10,6 +10,8 @@ using System.IO;
 using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TaxJarTaxCalculator;
+using TaxJarTaxCalculator.Models;
 
 namespace TaxService.Controllers
 {
@@ -54,7 +56,7 @@ namespace TaxService.Controllers
             taxRequest.Amount = orderTotal;
 
             // Special Promotion: FREE SHIPPING on all orders winter 2021!
-            taxRequest.ShippingAmount = 5.49M;
+            taxRequest.ShippingAmount = 0;
 
             taxRequest.ToCountry = "US";
             taxRequest.ToState = state;
@@ -76,66 +78,28 @@ namespace TaxService.Controllers
                 ZipCode = taxRequest.ToZip
             });
 
+            var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
+            var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
+            var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
+
+            // Instantiate TaxJar Tax Calculator
+            TaxCalculator taxJarTaxCalculator = new TaxCalculator();
+
             taxResultViewModel.OrderTotal = orderTotal;
             taxResultViewModel.State = state;
             taxResultViewModel.ZipCode = zipCode;
-            taxResultViewModel.TaxResult = GetTaxResultForOrder(taxRequest);
+            taxResultViewModel.TaxResult = taxJarTaxCalculator.GetTaxResultForOrder(taxRequest.Amount, taxRequest.ShippingAmount, taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
             taxResultViewModel.OrderTotalWithTax = orderTotal + taxResultViewModel.TaxResult.TaxAmount;
-            taxResultViewModel.ErrorMessage = "Sorry but there was a problem finding your tax rate, please try again later.";
+            taxResultViewModel.ErrorMessage = "Sorry but there was a problem finding your tax rate, please check state and zipcode or try again later.";
+
+            if(taxResultViewModel.TaxResult.TaxRate == -1)
+            {
+                taxResultViewModel.BadRequest = true;
+            }
 
             return View(taxResultViewModel);
         }
 
-        public Decimal GetTaxRateForLocation(TaxRequest taxRequest)
-        {
-            TaxResult taxResult = new TaxResult();
-            var taxRate = 0.00M;
-
-            // TODO: Tax Jar API
-
-            var taxApiEndpoint = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
-            var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
-            var taxRequestJson = JsonConvert.SerializeObject(taxRequest);
-
-            try
-            {
-                var client = new RestClient(taxApiEndpoint);
-                client.Timeout = -1;
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Authorization", "Token token=\"" + taxJarApiKey + "\"");
-                request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("application/json", taxRequestJson, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-
-                var data = (JObject)JsonConvert.DeserializeObject(response.Content);
-
-                // Parse JSON Response to TaxResult class
-                // taxResult = (TaxResult)JsonConvert.DeserializeObject(response.Content);
-
-                // assign taxRate
-                taxRate = data["tax"]["rate"].Value<decimal>();
-                
-            }
-            catch
-            {
-                // Log Error
-
-            }
-
-            return taxRate;
-        }
-
-        public TaxResult GetTaxResultForOrder(TaxRequest taxRequest)
-        {
-            var taxRate = GetTaxRateForLocation(taxRequest);
-            var taxAmount = taxRequest.Amount * taxRate;
-
-            TaxResult taxResult = new TaxResult();
-
-            taxResult.TaxRate = taxRate;
-            taxResult.TaxAmount = taxAmount;
-
-            return taxResult;
-        }
+        
     }
 }

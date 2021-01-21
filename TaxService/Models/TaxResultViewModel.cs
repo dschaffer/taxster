@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaxJarTaxCalculator.Models;
 
 namespace TaxService.Models
 {
@@ -14,6 +15,7 @@ namespace TaxService.Models
         public string ZipCode { get; set; }
         public string State { get; set; }
         public string ErrorMessage { get; set; }
+        public bool BadRequest { get; set; }
 
         public static List<SelectListItem> States = new List<SelectListItem>()
         {

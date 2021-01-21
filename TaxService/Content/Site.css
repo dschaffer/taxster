@@ -72,6 +72,10 @@ select.error {
     display: none;
 }
 
+.error-text.show-error {
+    display: block;
+}
+
 .error-text span {
     display: block;
     color: #f00;

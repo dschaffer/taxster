@@ -4,3 +4,7 @@ TaxService.Tests/bin/Debug/
 .vs/
 TaxService/bin/TaxService.pdb
 TaxService/bin/TaxService.dll
+TaxJarTaxCalculator/obj/Debug/
+TaxJarTaxCalculator/bin/Debug/
+TaxService/bin/TaxJarTaxCalculator.pdb
+TaxService/bin/TaxJarTaxCalculator.dll
