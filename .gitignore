@@ -2,3 +2,5 @@ TaxService.Tests/obj/Debug/
 TaxService/obj/Debug/
 TaxService.Tests/bin/Debug/
 .vs/
+TaxService/bin/TaxService.pdb
+TaxService/bin/TaxService.dll
