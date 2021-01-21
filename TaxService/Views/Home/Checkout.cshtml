@@ -66,13 +66,13 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <label>Tax Amount: </label>
-                    <input id="taxAmount" type="text" value="@Model.TaxResult.TaxAmount" />
+                    <input id="taxAmount" type="text" value="@String.Format("{0:0.00}", Model.TaxResult.TaxAmount)" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <label>Order Total With Tax: </label>
-                    <input id="taxAmount" type="text" value="@Model.OrderTotalWithTax" />
+                    <input id="taxAmount" type="text" value="@String.Format("{0:0.00}", Model.OrderTotalWithTax)" />
                 </div>
             </div>
             <div class="row">
