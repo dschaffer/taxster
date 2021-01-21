@@ -1,0 +1,81 @@
+﻿@model TaxService.Models.TaxResultViewModel
+
+@section scripts {
+    @Scripts.Render("~/Scripts/core.js")
+}
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Checkout</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h2>Your Order Details</h2>
+            <p>This tax calculation form uses the TaxJar Sales Tax API. Currently only US addresses and currency can be used for calculation.</p>
+        </div>
+    </div>
+    <form method="POST" onsubmit="return validateForm();">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <label>Order Total (in US dollars)</label>
+                <input id="orderTotal" name="orderTotal" type="text" value="@(Model != null && Model.OrderTotal != 0 ? Model.OrderTotal.ToString() : string.Empty)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <label>State</label>
+                @Html.DropDownListFor(x => x.State, TaxService.Models.TaxResultViewModel.States, new { Name = "state", value = "@(Model != null ? Model.State.ToString() : string.Empty)" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <label>Zip Code</label>
+                <input id="zipCode" name="zipCode" type="text" value="@(Model != null ? Model.ZipCode : string.Empty)" />
+            </div>
+        </div>
+        <div class="row error-text">
+            <div class="col-xs-12">
+                <span>@Model.ErrorMessage</span>
+            </div>
+        </div>
+
+        @if (Model?.TaxResult != null)
+        {
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label>Tax Rate: </label>
+                    <input id="taxRate" type="text" value="@Model.TaxResult.TaxRate" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label>Tax Amount: </label>
+                    <input id="taxAmount" type="text" value="@Model.TaxResult.TaxAmount" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <label>Order Total With Tax: </label>
+                    <input id="taxAmount" type="text" value="@Model.OrderTotalWithTax" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="hidden" name="resetFlag" value="true" />
+                    <button id="resetForm">Calculate Another Tax Rate</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-xs-12">
+                    <input id="calculateTax" type="submit" value="Calculate Tax" />
+                </div>
+            </div>
+        }
+    </form>
+}

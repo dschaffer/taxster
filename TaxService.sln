@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService", "TaxService\TaxService.csproj", "{129CACC3-305E-46BD-971D-1558B2C97AEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService.Tests", "TaxService.Tests\TaxService.Tests.csproj", "{1B32C177-A2E2-4497-A88A-9C5B3755B117}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{129CACC3-305E-46BD-971D-1558B2C97AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129CACC3-305E-46BD-971D-1558B2C97AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129CACC3-305E-46BD-971D-1558B2C97AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129CACC3-305E-46BD-971D-1558B2C97AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B32C177-A2E2-4497-A88A-9C5B3755B117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B32C177-A2E2-4497-A88A-9C5B3755B117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B32C177-A2E2-4497-A88A-9C5B3755B117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B32C177-A2E2-4497-A88A-9C5B3755B117}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB60B1D3-46D0-4E7D-A4BA-930C59CF9454}
+	EndGlobalSection
+EndGlobal
