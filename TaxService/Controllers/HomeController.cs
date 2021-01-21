@@ -21,7 +21,6 @@ namespace TaxService.Controllers
         {
             Response.Redirect("~/Home/Checkout");
         }
-
         [HttpGet]
         public ActionResult Checkout()
         {
@@ -30,7 +29,6 @@ namespace TaxService.Controllers
 
             return View(taxResultViewModel);
         }
-
         [HttpPost]
         public ActionResult Checkout(decimal orderTotal, string state, string zipCode, bool resetFlag = false)
         {
@@ -99,7 +97,5 @@ namespace TaxService.Controllers
 
             return View(taxResultViewModel);
         }
-
-        
     }
 }

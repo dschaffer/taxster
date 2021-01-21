@@ -8,3 +8,7 @@ TaxJarTaxCalculator/obj/Debug/
 TaxJarTaxCalculator/bin/Debug/
 TaxService/bin/TaxJarTaxCalculator.pdb
 TaxService/bin/TaxJarTaxCalculator.dll
+packages/MSTest.TestAdapter.1.3.2/
+packages/MSTest.TestFramework.1.3.2/
+TaxJarTaxCalculator.Tests/bin/Debug/
+TaxJarTaxCalculator.Tests/obj/Debug/

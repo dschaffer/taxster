@@ -10,7 +10,6 @@ namespace TaxJarTaxCalculator
     {
         public TaxCalculator()
         {
-            
         }
 
         public Decimal GetTaxRateForLocation(string taxApiEndpointUrl, string taxJarApiKey, string taxRequestJsonString)
@@ -49,7 +48,6 @@ namespace TaxJarTaxCalculator
 
             return taxRate;
         }
-
         public TaxResult GetTaxResultForOrder(decimal amount, decimal shippingAmount, string taxApiEndpointUrl, string taxJarApiKey, string taxRequestJsonString)
         {
             var taxRate = GetTaxRateForLocation(taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
