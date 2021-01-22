@@ -76,17 +76,10 @@ namespace TaxService.Controllers
                 ZipCode = taxRequest.ToZip
             });
 
-            var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
-            var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
-            var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
-
-            // Instantiate TaxJar Tax Calculator
-            TaxCalculator taxJarTaxCalculator = new TaxCalculator();
-
             taxResultViewModel.OrderTotal = orderTotal;
             taxResultViewModel.State = state;
             taxResultViewModel.ZipCode = zipCode;
-            taxResultViewModel.TaxResult = taxJarTaxCalculator.GetTaxResultForOrder(taxRequest.Amount, taxRequest.ShippingAmount, taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
+            taxResultViewModel.TaxResult = GetTaxResultForOrder(taxRequest);
             taxResultViewModel.OrderTotalWithTax = orderTotal + taxResultViewModel.TaxResult.TaxAmount;
             taxResultViewModel.ErrorMessage = "Sorry but there was a problem finding your tax rate, please check state and zipcode or try again later.";
 
@@ -96,6 +89,34 @@ namespace TaxService.Controllers
             }
 
             return View(taxResultViewModel);
+        }
+        public TaxResult GetTaxResultForOrder(TaxRequest taxRequest)
+        {
+            var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
+            var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
+            var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
+
+            // Instantiate TaxJar Tax Calculator
+            TaxCalculator taxJarTaxCalculator = new TaxCalculator();
+
+            TaxResult taxResult = new TaxResult();
+            taxResult = taxJarTaxCalculator.GetTaxResultForOrder(taxRequest.Amount, taxRequest.ShippingAmount, taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
+
+            return taxResult;
+        }
+
+        public Decimal GetTaxRateForLocation(TaxRequest taxRequest)
+        {
+            var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
+            var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
+            var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
+
+            // Instantiate TaxJar Tax Calculator
+            TaxCalculator taxJarTaxCalculator = new TaxCalculator();
+
+            Decimal taxRateForLocation = taxJarTaxCalculator.GetTaxRateForLocation(taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
+
+            return taxRateForLocation;
         }
     }
 }

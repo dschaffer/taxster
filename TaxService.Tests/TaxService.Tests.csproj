@@ -102,6 +102,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaxJarTaxCalculator\TaxJarTaxCalculator.csproj">
+      <Project>{0e74166b-5e3d-4967-a526-e1eb6828d313}</Project>
+      <Name>TaxJarTaxCalculator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaxService\TaxService.csproj">
       <Project>{129CACC3-305E-46BD-971D-1558B2C97AEC}</Project>
       <Name>TaxService</Name>

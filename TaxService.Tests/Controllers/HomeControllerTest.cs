@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TaxJarTaxCalculator.Models;
 using TaxService;
 using TaxService.Controllers;
 using TaxService.Models;
@@ -44,6 +45,94 @@ namespace TaxService.Tests.Controllers
             Assert.IsNotNull(model.ErrorMessage);
             Assert.IsNotNull(modelPost.ErrorMessage);
             Assert.IsNotNull(modelPageReset.ErrorMessage);
+        }
+        [TestMethod]
+        public void GetTaxRateForLocation()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+
+            // Verify tax rate is successfully returned with valid query
+            Decimal result = controller.GetTaxRateForLocation(new TaxRequest()
+            {
+                FromCountry = "US", 
+                FromState = "NY", 
+                FromCity = "New York", 
+                FromZip = "10003", 
+                Amount = 100, 
+                ShippingAmount = 0, 
+                ToCountry = "US", 
+                ToState = "CT",
+                ToZip = "06877", 
+                NexusAddresses= new List<NexusAddress>()
+                {
+                    new NexusAddress
+                    {
+                        Country = "US", 
+                        State = "NY", 
+                        ZipCode = "10003"
+                    }, 
+                    new NexusAddress
+                    {
+                        Country = "US", 
+                        State = "CT", 
+                        ZipCode = "06877"
+                    }
+                }
+            });
+
+            // Assert
+
+            // Valid query
+            Assert.IsNotNull(result);
+            // Value returned is a decimal greater than or equal to 0
+            Assert.IsTrue(result.GetType() == typeof(decimal) && result >= 0);
+        }
+        [TestMethod]
+        public void GetTaxResultForOrder()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+
+            // Verify tax rate is successfully returned with valid query
+            TaxResult result = controller.GetTaxResultForOrder(new TaxRequest()
+            {
+                FromCountry = "US",
+                FromState = "NY",
+                FromCity = "New York",
+                FromZip = "10003",
+                Amount = 100,
+                ShippingAmount = 0,
+                ToCountry = "US",
+                ToState = "CT",
+                ToZip = "06877",
+                NexusAddresses = new List<NexusAddress>()
+                {
+                    new NexusAddress
+                    {
+                        Country = "US",
+                        State = "NY",
+                        ZipCode = "10003"
+                    },
+                    new NexusAddress
+                    {
+                        Country = "US",
+                        State = "CT",
+                        ZipCode = "06877"
+                    }
+                }
+            });
+
+            // Assert
+
+            // Valid query
+            Assert.IsNotNull(result);
+            // Object returned is of type TaxResult
+            Assert.IsTrue(result.GetType() == typeof(TaxResult));
         }
     }
 }

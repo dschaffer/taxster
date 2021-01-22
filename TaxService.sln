@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService", "TaxService\Ta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxService.Tests", "TaxService.Tests\TaxService.Tests.csproj", "{1B32C177-A2E2-4497-A88A-9C5B3755B117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxJarTaxCalculator", "TaxJarTaxCalculator\TaxJarTaxCalculator.csproj", "{0E74166B-5E3D-4967-A526-E1EB6828D313}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxJarTaxCalculator", "TaxJarTaxCalculator\TaxJarTaxCalculator.csproj", "{0E74166B-5E3D-4967-A526-E1EB6828D313}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxJarTaxCalculator.Tests", "TaxJarTaxCalculator.Tests\TaxJarTaxCalculator.Tests.csproj", "{7738C6D7-8414-4564-BB8F-939D0A68EA9F}"
 EndProject
