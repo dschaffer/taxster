@@ -1,5 +1,6 @@
 # Taxster
 A Tax Service
+
 Release 1
 
 Taxter is an application that calculates and displays a tax rate, tax amount and new total with tax given a specific purchase amount and location the purchase is taking place. The application consists of 2 main parts, a Tax Calculator and a Tax Service, and associated Test Projects.
