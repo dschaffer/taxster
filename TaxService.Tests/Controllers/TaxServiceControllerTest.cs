@@ -12,13 +12,13 @@ using TaxService.Models;
 namespace TaxService.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class TaxServiceControllerTest
     {
         [TestMethod]
         public void Checkout()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            TaxServiceController controller = new TaxServiceController();
 
             // Act
 
@@ -50,7 +50,7 @@ namespace TaxService.Tests.Controllers
         public void GetTaxRateForLocation()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            TaxServiceController controller = new TaxServiceController();
 
             // Act
 
@@ -94,7 +94,7 @@ namespace TaxService.Tests.Controllers
         public void GetTaxResultForOrder()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            TaxServiceController controller = new TaxServiceController();
 
             // Act
 

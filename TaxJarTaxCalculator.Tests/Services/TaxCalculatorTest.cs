@@ -25,6 +25,8 @@ namespace TaxJarTaxCalculator.Tests.Services
 
             // Valid query
             Assert.IsNotNull(result);
+            // Value returned is a decimal greater than or equal to 0
+            Assert.IsTrue(result.GetType() == typeof(decimal) && result >= 0);
             // State/Zipcode mismatch
             Assert.IsNotNull(resultStateZipMismatch);
         }
@@ -45,6 +47,8 @@ namespace TaxJarTaxCalculator.Tests.Services
 
             // Valid TaxResult
             Assert.IsNotNull(result);
+            // Object returned is of type TaxResult
+            Assert.IsTrue(result.GetType() == typeof(TaxResult));
             // State/Zipcode mismatch
             Assert.IsNotNull(resultStateZipMismatch);
         }

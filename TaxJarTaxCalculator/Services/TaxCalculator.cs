@@ -19,6 +19,7 @@ namespace TaxJarTaxCalculator
 
             try
             {
+                // Send request to TaxJar Sales Tax API
                 var client = new RestClient(taxApiEndpointUrl);
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
@@ -29,10 +30,13 @@ namespace TaxJarTaxCalculator
 
                 var data = (JObject)JsonConvert.DeserializeObject(response.Content);
 
-                // check for bad request
-                // i.e. zipcode and state mismatch
+                // check for error result
+                // i.e. due to bad request (zipcode and state mismatch)
                 if(data["tax"] == null && data["error"] != null)
                 {
+                    // Log Error
+                    Console.Write(string.Format("Error result received from TaxJar Sales Tax API. Request: {0}", taxRequestJsonString));
+
                     return -1;
                 }
 
@@ -43,7 +47,7 @@ namespace TaxJarTaxCalculator
             catch
             {
                 // Log Error
-
+                Console.Write(string.Format("Error trying to call TaxJar Sales Tax API. Request: {0}", taxRequestJsonString));
             }
 
             return taxRate;

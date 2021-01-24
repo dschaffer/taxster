@@ -15,16 +15,19 @@ using TaxJarTaxCalculator.Models;
 
 namespace TaxService.Controllers
 {
-    public class HomeController : Controller
+    public class TaxServiceController : Controller
     {
         public void Index()
         {
-            Response.Redirect("~/Home/Checkout");
+            // Just redirect to Checkout page
+            Response.Redirect("~/TaxService/Checkout");
         }
         [HttpGet]
         public ActionResult Checkout()
         {
+            // Render empty form on new page request
             TaxResultViewModel taxResultViewModel = new TaxResultViewModel();
+            // Populate error message used by client side validation
             taxResultViewModel.ErrorMessage = "Please correct the highlighted fields and try again.";
 
             return View(taxResultViewModel);
@@ -34,8 +37,10 @@ namespace TaxService.Controllers
         {
             TaxResultViewModel taxResultViewModel = new TaxResultViewModel();
 
+            // Reset the form to accept new data if requested by the user
             if (resetFlag)
             {
+                // Populate error message used by client side validation
                 taxResultViewModel.ErrorMessage = "Please correct the highlighted fields and try again.";
 
                 return View(taxResultViewModel);
@@ -43,7 +48,7 @@ namespace TaxService.Controllers
 
             TaxRequest taxRequest = new TaxRequest();
 
-            // Assuming all tax calculations are based off of this address
+            // Assuming the store is located at this address, so this From Address is used in all tax calculations
             // This can be made configurable with additional form fields in the view 
             taxRequest.FromCity = "New York";
             taxRequest.FromCountry = "US";
@@ -79,12 +84,16 @@ namespace TaxService.Controllers
             taxResultViewModel.OrderTotal = orderTotal;
             taxResultViewModel.State = state;
             taxResultViewModel.ZipCode = zipCode;
+            // Call TaxCalculator
             taxResultViewModel.TaxResult = GetTaxResultForOrder(taxRequest);
             taxResultViewModel.OrderTotalWithTax = orderTotal + taxResultViewModel.TaxResult.TaxAmount;
-            taxResultViewModel.ErrorMessage = "Sorry but there was a problem finding your tax rate, please check state and zipcode or try again later.";
 
+            // Check for bad request
+            // Likely due to state/zipcode mismatch
             if(taxResultViewModel.TaxResult.TaxRate == -1)
             {
+                // Populate error message to display to user in case of bad request
+                taxResultViewModel.ErrorMessage = "Sorry but there was a problem finding your tax rate, please check state and zipcode or try again later.";
                 taxResultViewModel.BadRequest = true;
             }
 
@@ -92,14 +101,18 @@ namespace TaxService.Controllers
         }
         public TaxResult GetTaxResultForOrder(TaxRequest taxRequest)
         {
+            // API Credentials in config file
             var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
             var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
+            // API expects TaxRequest as JSON string
             var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
+
+            TaxResult taxResult = new TaxResult();
 
             // Instantiate TaxJar Tax Calculator
             TaxCalculator taxJarTaxCalculator = new TaxCalculator();
 
-            TaxResult taxResult = new TaxResult();
+            // Call TaxCalculator application
             taxResult = taxJarTaxCalculator.GetTaxResultForOrder(taxRequest.Amount, taxRequest.ShippingAmount, taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
 
             return taxResult;
@@ -107,13 +120,16 @@ namespace TaxService.Controllers
 
         public Decimal GetTaxRateForLocation(TaxRequest taxRequest)
         {
+            // API Credentials in config file
             var taxApiEndpointUrl = WebConfigurationManager.AppSettings["TaxApiEndpointUrl"];
             var taxJarApiKey = WebConfigurationManager.AppSettings["TaxJarApiKey"];
+            // API expects TaxRequest as JSON string
             var taxRequestJsonString = JsonConvert.SerializeObject(taxRequest);
 
             // Instantiate TaxJar Tax Calculator
             TaxCalculator taxJarTaxCalculator = new TaxCalculator();
 
+            // Call TaxCalculator application
             Decimal taxRateForLocation = taxJarTaxCalculator.GetTaxRateForLocation(taxApiEndpointUrl, taxJarApiKey, taxRequestJsonString);
 
             return taxRateForLocation;
