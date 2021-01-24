@@ -3,19 +3,19 @@ A Tax Service
 
 Release 1
 
-Taxter is an application that calculates and displays a tax rate, tax amount and new total with tax given a specific purchase amount and location the purchase is taking place. The application consists of 2 main parts, a Tax Calculator and a Tax Service, and associated Test Projects.
+Taxter is an application that calculates and displays a tax rate, tax amount and new total with tax given a specific purchase amount and location where the purchase is taking place. The application consists of 2 main parts, a Tax Calculator and a Tax Service, and associated Test Projects.
 
 ## Key Assumptions
 
-1. The form currently only supports US addresses and currency. Support for internation addresses and aditional currencies could be added in the future.
+1. The form currently only supports US addresses and currency. Support for international addresses and aditional currencies could be added in the future.
 2. Additional TaxCalculator classes using other Tax APIs can be added and made configurable in the future.
 3. The From Address is static and set to an address in New York, but the From Address could be made configurable in the future. The API seems to calculate the taxes based off of the To Address and not the From Address.
 4. Shipping is FREE currently due to a marketing promotion.
 
 ------------------------------------------------------------------
 
-## TaxCalculator
-The TaxCalculator class consists of a constructor and 2 main methods, and uses 3 models.
+## TaxJarTaxCalculator
+The TaxJarTaxCalculator class consists of a constructor and 2 main methods, and uses 3 models. It communicates with the TaxJar Sales Tax API.
 
 ### NexusAddress.cs
 Represents a NexusAddress with associated JSON property names. A list of NexusAddresses, representing the To and From addresses, is sent in every request to the TaxJar Sales Tax API.
@@ -27,7 +27,7 @@ Represents a TaxRequest with associated JSON property names. Every request to th
 Represents a TaxResult used by the Checkout page in the Tax Service. It contains the tax rate and subtotal with tax as decimal numbers.
 
 ### GetTaxRateForLocation
-Takes API credentials and a TaxRequest as a JSON string and sends a request to the TaxJar Sales Tax API. After a successful request and response it returns a tax rate as a decimal number. -1 is returned when an error result is returned from the API and an error is written to the console. If request fails an error is written to the console.
+Takes API credentials and a TaxRequest as a JSON string and sends a request to the TaxJar Sales Tax API. After a successful request and response it returns a tax rate as a decimal number. -1 is returned when an error result is returned from the API and an error is written to the console. If the request fails an error is written to the console.
 
 ### GetTaxResultForOrder
 Takes subtotal and shipping amounts, API credentials and a TaxRequest as a JSON string and calls GetTaxRateForLocation. Calculates a tax amount and returns a TaxResult object.
