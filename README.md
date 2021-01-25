@@ -89,6 +89,15 @@ TaxService.Tests contains one controller with 3 test methods:
 
 ------------------------------------------------------------------
 
+## Nuget Packages
+
+The Taxster application uses the following Nuget packages:
+
+1. Newtonsoft.Json - used to serialize TaxRequest objects for ingestion by the TaxJar Sales Tax API.
+2. RestSharp - Rest API client used to call the TaxJar Sales Tax API from c# code.
+
+------------------------------------------------------------------
+
 ## Javascript
 The TaxService website uses Bootstrap and jQuery, and a custom form validation function in core.js.
 
