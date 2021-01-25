@@ -3,12 +3,12 @@ A Tax Service
 
 Release 1
 
-Taxter is an application that calculates and displays a tax rate, tax amount and new total with tax given a specific purchase amount and location where the purchase is taking place. The application consists of 2 main parts, a Tax Calculator and a Tax Service, and associated Test Projects.
+Taxster is an application that calculates and displays a tax rate, tax amount and new total with tax given a specific purchase amount and location where the purchase is taking place. The application consists of 2 main parts, a Tax Calculator and a Tax Service, and associated Test Projects.
 
 ## Key Assumptions
 
 1. The form currently only supports US addresses and currency. Support for international addresses and aditional currencies could be added in the future.
-2. Additional TaxCalculator classes using other Tax APIs can be added and made configurable in the future.
+2. Additional TaxCalculator classes using other Sales Tax APIs can be added and made configurable in the future.
 3. The From Address is static and set to an address in New York, but the From Address could be made configurable in the future. The API seems to calculate the taxes based off of the To Address and not the From Address.
 4. Shipping is FREE currently due to a marketing promotion.
 
